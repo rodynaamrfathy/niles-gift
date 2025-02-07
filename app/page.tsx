@@ -1,7 +1,8 @@
 "use client"
+import Link from 'next/link';
 import Head from "next/head";
 import Image from "next/image";
-import Header from "./components/header";  // Import the Header component
+import Header from "./components/header";
 import ContactInfo from "./components/contact_info";
 import NewsSection from "./components/news";
 import MissionSection from "./components/mission";
@@ -39,12 +40,17 @@ export default function Home() {
                 Premium organic herbs, Aloe Vera, and sustainable agricultural products from Egypt.
               </p>
               <div className="mt-6 flex space-x-4">
+              <Link href="/products">
                 <button className="bg-[#D4A373] px-6 py-3 rounded-full text-white">
                   Explore Our Products
                 </button>
+              </Link>
+
+              <Link href="#contact">
                 <button className="border border-white px-6 py-3 rounded-full text-white">
                   Get In Touch
                 </button>
+              </Link>
               </div>
             </div>
           </section>

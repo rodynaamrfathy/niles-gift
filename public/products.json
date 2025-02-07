@@ -1,0 +1,127 @@
+[
+  {
+    "id": 1,
+    "name": "Basil",
+    "scientific_name": "Ocimum basilicum",
+    "image": "/images/basil.jpg",
+    "color": "Green to yellowish-green",
+    "purity": "96%",
+    "moisture": "≤12%",
+    "volatile_oils": "≥0.4%",
+    "type": "Herbs"
+  },
+  {
+    "id": 2,
+    "name": "Coriander leaves",
+    "scientific_name": "Coriandrum sativum",
+    "image": "/images/coriander_leaves.jpg",
+    "color": "Bright green",
+    "purity": "≥96%",
+    "moisture": "≤10%",
+    "type": "Herbs"
+  },
+  {
+    "id": 3,
+    "name": "Dill leaves",
+    "scientific_name": "Anethum graveolens",
+    "image": "/images/dill_leaves.jpg",
+    "color": "Bright to dark green",
+    "purity": "97%",
+    "moisture": "≤10%",
+    "volatile_oils": "≥1.7%",
+    "type": "Herbs"
+  },
+  {
+    "id": 4,
+    "name": "Lemon balm",
+    "scientific_name": "Melissa officinalis",
+    "image": "/images/lemon_balm.jpg",
+    "color": "Pale green",
+    "purity": "≥95%",
+    "moisture": "≤12%",
+    "type": "Herbs"
+  },
+  {
+    "id": 5,
+    "name": "Lemongrass",
+    "scientific_name": "Cymbopogon citratus",
+    "image": "/images/lemongrass.jpg",
+    "color": "Light to pale green",
+    "moisture": "≤12%",
+    "volatile_oils": "≥1.2%",
+    "type": "Herbs"
+  },
+  {
+    "id": 6,
+    "name": "Liquorice",
+    "scientific_name": "Glycyrrhiza glabra",
+    "image": "/images/liquorice.jpg",
+    "color": "Light brown",
+    "purity": "96%",
+    "moisture": "≤12%",
+    "type": "Herbs"
+  },
+  {
+    "id": 7,
+    "name": "Marjoram",
+    "scientific_name": "Origanum majorana",
+    "image": "/images/marjoram.jpg",
+    "color": "Oily green",
+    "purity": "97%",
+    "moisture": "≤10%",
+    "oil_content": "≥1.2%",
+    "type": "Herbs"
+  },
+  {
+    "id": 8,
+    "name": "Moringa",
+    "scientific_name": "Moringa oleifera",
+    "image": "/images/moringa.jpg",
+    "color": "Bright to dark green",
+    "purity": "97%",
+    "moisture": "≤10%",
+    "type": "Herbs"
+  },
+  {
+    "id": 9,
+    "name": "Oregano",
+    "scientific_name": "Origanum vulgare",
+    "image": "/images/oregano.jpg",
+    "color": "Green to olive",
+    "purity": "≥95%",
+    "moisture": "≤12%",
+    "type": "Herbs"
+  },
+  {
+    "id": 10,
+    "name": "Sesame Oil",
+    "image": "/images/sesame_oil.jpg",
+    "type": "Oils"
+  },
+  {
+    "id": 11,
+    "name": "Black Seed Oil",
+    "image": "/images/black_seed_oil.jpg",
+    "type": "Oils"
+  },
+  {
+    "id": 12,
+    "name": "Flaxseed Oil",
+    "image": "/images/flaxseed_oil.jpg",
+    "type": "Oils"
+  },
+  {
+    "id": 13,
+    "name": "Aloe Vera",
+    "image": "/images/aloe_vera.jpg",
+    "product_specs": "Whole leaves of Aloe vera Barbadensis",
+    "export_packaging_options": "Plastic crates",
+    "type": "Aloe Vera"
+  },
+  {
+    "id": 14,
+    "name": "Salicornia",
+    "image": "/images/salicornia.jpg",
+    "status": "Coming Soon"
+  }
+]

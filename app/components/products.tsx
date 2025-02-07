@@ -4,7 +4,7 @@ import '../styles/products.css';
 
 const Products = () => {
   return (
-    <div className="bg-[#F5F5F5] py-8 px-4">
+    <div id="products" className="bg-[#F5F5F5] py-8 px-4">
       <h2 className="text-4xl font-bold text-[#1B4D3E] text-center mb-6">Our Products</h2>
       <p className="text-lg text-[#333333] leading-relaxed mb-8 text-center">
         We offer a wide range of organic products that cater to your needs.

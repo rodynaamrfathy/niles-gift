@@ -1,0 +1,34 @@
+{
+    "categories": [
+      {
+        "name": "Organic Herbals",
+        "subcategories": [
+          {
+            "name": "Herbs"
+          },
+          {
+            "name": "Flowers"
+          },
+          {
+            "name": "Spices and Seeds"
+          }
+        ]
+      },
+      {
+        "name": "Other Products",
+        "subcategories": [
+          {
+            "name": "Oils"
+          },
+          {
+            "name": "Aloe Vera"
+          },
+          {
+            "name": "Salicornia",
+            "status": "Coming Soon"
+          }
+        ]
+      }
+    ]
+  }
+  
