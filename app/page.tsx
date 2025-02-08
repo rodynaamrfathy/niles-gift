@@ -7,6 +7,8 @@ import ContactInfo from "./components/contact_info";
 import NewsSection from "./components/news";
 import MissionSection from "./components/mission";
 import ProductsSection from "./components/products";
+import Footer from "./components/footer";
+
 
 export default function Home() {
   return (
@@ -88,6 +90,7 @@ export default function Home() {
           <ContactInfo />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
