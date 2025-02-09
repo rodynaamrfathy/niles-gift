@@ -83,6 +83,27 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Features Section */}
+            <section className="py-16 px-6 md:px-20 bg-[#F5F5F5] text-center">
+            <h2 className="text-3xl font-bold text-[#1B4D3E]">Why Choose Nile’s Gift?</h2>
+            <div className="mt-8 overflow-x-scroll flex space-x-4 p-4 rounded-lg bg-[#F5F5F5] no-scrollbar">
+            {[
+                { src: "/Features/Custom_Crop_Cultivation.png", title: "Custom Crop Cultivation", desc: "Tailored planting schedules to meet client needs." },
+                { src: "/Features/Private_Labeling.png", title: "Private Labeling", desc: "Brand our premium products as your own." },
+                { src: "/Features/Quality_Assurance.png", title: "Quality Assurance", desc: "Strict quality control measures to ensure excellence." },
+                { src: "/Features/Certified_organic_products.png", title: "Certified organic products", desc: "Environmentally friendly farming methods." },
+                { src: "/Features/trusted_farmers.png", title: "Direct Sourcing", desc: "We source directly from trusted farmers." },
+                { src: "/Features/LogisticsExport_Management.png", title: "Logistics & Export Management", desc: "Efficient global shipping and customs support." },
+              ].map((feature, index) => (
+                <div key={index} className="bg-[#F5F5F5] p-6 shadow rounded-lg min-w-[250px]">
+                  <Image src={feature.src} alt={feature.title} width={150} height={150} />
+                  <h3 className="text-xl font-semibold text-[#1B4D3E]">{feature.title}</h3>
+                  <p className="text-gray-600 mt-2">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Other Sections */}
           <MissionSection />
           <ProductsSection />
