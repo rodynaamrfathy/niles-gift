@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const categories = await import("@/data/categories.json"); // Use dynamic import
-    return NextResponse.json(categories.default);
+    const { default: categories } = await import("@/data/categories.json"); // Extract default export
+    return NextResponse.json(categories); // Ensure it's an array
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching categories:", error);
     return NextResponse.json({ error: "Failed to load categories" }, { status: 500 });
   }
 }
