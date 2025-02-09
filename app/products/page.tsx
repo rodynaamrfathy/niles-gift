@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
-import products from "@/public/products.json";
-import categoriesData from "@/public/categories.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/header";
 import Footer from "../components/footer";
 
@@ -23,29 +21,46 @@ type Product = {
   oil_content?: string;
 };
 
-// Extract categories dynamically
-const organicHerbalCategory = "Organic Herbals";
-const organicSubcategories =
-  categoriesData.categories.find((category) => category.name === organicHerbalCategory)
-    ?.subcategories.map((sub) => sub.name) || [];
-
-// Extract other product categories individually
-const otherProducts =
-  categoriesData.categories.find((category) => category.name === "Other Products")
-    ?.subcategories.map((sub) => sub.name) || [];
-
-// Final list of categories
-const categories = ["All", organicHerbalCategory, ...otherProducts];
+// Define TypeScript type for Category
+type Category = {
+  name: string;
+  subcategories: { name: string; status?: string }[];
+};
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  useEffect(() => {
+    // Fetch products
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Failed to load products:", err));
+
+    // Fetch categories
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data: { categories: Category[] }) => {
+        const organicHerbalCategory = "Organic Herbals";
+        const organicSubcategories =
+          data.categories.find((cat) => cat.name === organicHerbalCategory)?.subcategories.map((sub) => sub.name) || [];
+        
+        const otherProducts =
+          data.categories.find((cat) => cat.name === "Other Products")?.subcategories.map((sub) => sub.name) || [];
+
+        setCategories(["All", organicHerbalCategory, ...otherProducts]);
+      })
+      .catch((err) => console.error("Failed to load categories:", err));
+  }, []);
 
   // Filtering logic
   const filteredProducts =
     selectedCategory === "All"
       ? products
-      : selectedCategory === organicHerbalCategory
-      ? products.filter((product) => organicSubcategories.includes(product.type || ""))
+      : selectedCategory === "Organic Herbals"
+      ? products.filter((product) => ["Herbs", "Flowers", "Spices and Seeds"].includes(product.type || ""))
       : products.filter((product) => product.type === selectedCategory);
 
   return (
@@ -53,7 +68,7 @@ export default function ProductsPage() {
       <Header />
       <main className="bg-[#F5F5F5] min-h-screen container mx-auto py-20 mt-20 px-6">
         <h1 className="text-4xl font-bold text-center mb-10">Our Products</h1>
-        
+
         {/* Category Filter Buttons */}
         <div className="flex justify-center space-x-4 mb-8">
           {categories.map((category) => (
@@ -74,15 +89,15 @@ export default function ProductsPage() {
         {/* Display Products or "Coming Soon" */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product: Product) => (
+            {filteredProducts.map((product) => (
               <div key={product.id} className="flex flex-col items-center text-center border p-6 rounded-lg shadow-lg hover:shadow-2xl transition bg-white">
                 <div className="w-72 h-72 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                   {product.image ? (
-                    <Image 
-                      src={product.image} 
-                      alt={product.name} 
-                      width={300} 
-                      height={300} 
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={300}
+                      height={300}
                       className="object-cover w-full h-full"
                     />
                   ) : (
