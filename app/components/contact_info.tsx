@@ -18,7 +18,7 @@ export default function Contact() {
       <h2 className="text-3xl font-bold">Contact Us</h2>
       <p className="mt-4">Reach out to us via phone or email</p>
       
-      <div className="mt-6 flex justify-center items-center gap-8">
+      <div className="mt-6 flex flex-col md:flex-row justify-center items-center gap-6 md:gap-8">
         {/* Phone Number */}
         <a href="tel:+201001607845" className="flex items-center text-lg font-semibold text-[#1B4D3E] hover:text-[#0F2F25] transition-colors duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,7 +36,8 @@ export default function Contact() {
         </a>
       </div>
 
-      <form className="mt-6 max-w-md mx-auto" onSubmit={handleSubmit}>
+      {/* Contact Form */}
+      <form className="mt-6 max-w-md w-full mx-auto px-4 sm:px-0" onSubmit={handleSubmit}>
         <input 
           type="text" 
           name="name"
@@ -60,10 +61,12 @@ export default function Contact() {
           placeholder="Message" 
           value={formData.message} 
           onChange={handleChange} 
-          className="w-full p-3 border border-gray-300 rounded-md mb-4 text-[#1B4D3E]"
+          className="w-full p-3 border border-gray-300 rounded-md mb-4 text-[#1B4D3E] h-32 resize-none"
           required
         />
-        <button type="submit" className="bg-[#1B4D3E] py-3 px-6 text-white rounded-full">Submit</button>
+        <button type="submit" className="bg-[#1B4D3E] py-3 px-6 text-white rounded-full w-full sm:w-auto">
+          Submit
+        </button>
       </form>
     </section>
   );

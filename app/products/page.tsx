@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import Header from "./components/header";
 import Footer from "../components/footer";
 
-// Define TypeScript type for Product
+// Define TypeScript types
 type Product = {
   id: number;
   name: string;
@@ -21,7 +22,6 @@ type Product = {
   oil_content?: string;
 };
 
-// Define TypeScript type for Category
 type Category = {
   name: string;
   subcategories: { name: string; status?: string }[];
@@ -31,15 +31,14 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch products
     fetch("/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Failed to load products:", err));
 
-    // Fetch categories
     fetch("/api/categories")
       .then((res) => res.json())
       .then((data: { categories: Category[] }) => {
@@ -55,7 +54,6 @@ export default function ProductsPage() {
       .catch((err) => console.error("Failed to load categories:", err));
   }, []);
 
-  // Filtering logic
   const filteredProducts =
     selectedCategory === "All"
       ? products
@@ -66,11 +64,42 @@ export default function ProductsPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#F5F5F5] min-h-screen container mx-auto py-20 mt-20 px-6">
-        <h1 className="text-4xl font-bold text-center mb-10">Our Products</h1>
+      <main className="bg-[#F5F5F5] min-h-screen container mx-auto py-20 mt-20 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-[#1B4D3E]">Our Products</h1>
 
-        {/* Category Filter Buttons */}
-        <div className="flex justify-center space-x-4 mb-8">
+      {/* Burger Menu for Mobile */}
+        <div className="sm:hidden flex flex-col items-center gap-2 mb-6"> 
+          <h1 className="text-lg sm:text-2xl text-[#1B4D3E]">Select Filter</h1>
+          <button
+            className="p-2 bg-[#1B4D3E] text-white rounded-md"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+
+        {menuOpen && (
+          <div className="sm:hidden flex flex-col items-center bg-white shadow-lg rounded-lg p-4 mb-8">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`w-full py-2 text-lg font-semibold ${
+                  selectedCategory === category ? "text-green-600 bg-gray-200" : "text-gray-700"
+                }`}
+                onClick={() => {
+                  setSelectedCategory(category);
+                  setMenuOpen(false);
+                }}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Category Buttons for Larger Screens */}
+        <div className="hidden sm:flex justify-center space-x-4 mb-8">
           {categories.map((category) => (
             <button
               key={category}
@@ -84,14 +113,13 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        <h2 className="text-2xl font-bold text-green-600 text-center mb-6">{selectedCategory}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-green-600 text-center mb-6">{selectedCategory}</h2>
 
-        {/* Display Products or "Coming Soon" */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="flex flex-col items-center text-center border p-6 rounded-lg shadow-lg hover:shadow-2xl transition bg-white">
-                <div className="w-72 h-72 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
+              <div key={product.id} className="flex flex-col items-center text-center border p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition bg-white">
+                <div className="w-full max-w-xs h-64 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                   {product.image ? (
                     <Image
                       src={product.image}
@@ -104,22 +132,13 @@ export default function ProductsPage() {
                     <p className="text-gray-500">Image not available</p>
                   )}
                 </div>
-                <h2 className="mt-4 text-2xl font-semibold text-green-600">{product.name}</h2>
-                {product.scientific_name && <p className="italic text-gray-600">{product.scientific_name}</p>}
-                <ul className="mt-2 text-gray-700 space-y-1">
-                  {product.color && <li>🌿 <strong>Color:</strong> {product.color}</li>}
-                  {product.purity && <li>✔️ <strong>Purity:</strong> {product.purity}</li>}
-                  {product.moisture && <li>💧 <strong>Moisture:</strong> {product.moisture}</li>}
-                  {product.volatile_oils && <li>🛢️ <strong>Volatile Oils:</strong> {product.volatile_oils}</li>}
-                  {product.oil_content && <li>🛢️ <strong>Oil Content:</strong> {product.oil_content}</li>}
-                  {product.product_specs && <li>🌿 <strong>Specs:</strong> {product.product_specs}</li>}
-                  {product.export_packaging_options && <li>📦 <strong>Packaging:</strong> {product.export_packaging_options}</li>}
-                </ul>
+                <h2 className="mt-4 text-lg sm:text-2xl font-semibold text-green-600">{product.name}</h2>
+                {product.scientific_name && <p className="italic text-gray-600 text-sm sm:text-base">{product.scientific_name}</p>}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-2xl text-center font-semibold text-gray-500 mt-10"> Coming Soon ...</p>
+          <p className="text-lg sm:text-2xl text-center font-semibold text-gray-500 mt-10"> Coming Soon ...</p>
         )}
       </main>
       <Footer />
