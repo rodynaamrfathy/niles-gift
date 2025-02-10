@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Button from './components/Button';
 import Input from './components/Input';
 import Card from './components/Card';
@@ -9,9 +10,8 @@ import TableHead from './components/TableHead';
 import TableRow from './components/TableRow';
 import TableCell from './components/TableCell';
 import TableBody from './components/TableBody';
-import Image from "next/image"
+import Image from 'next/image';
 
-// Define TypeScript types
 type Product = {
   id: number;
   name: string;
@@ -34,10 +34,18 @@ type Category = {
 };
 
 export default function AdminPage() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      router.push('/admin/login'); // Redirect to login if not authenticated
+    }
+  }, [router]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,17 +54,14 @@ export default function AdminPage() {
           fetch('/api/products'),
           fetch('/api/categories'),
         ]);
-  
+
         if (!productsRes.ok || !categoriesRes.ok) {
           throw new Error(`Failed to fetch data: ${productsRes.status}, ${categoriesRes.status}`);
         }
-  
+
         const productsData = await productsRes.json();
         const categoriesData = await categoriesRes.json();
-  
-        console.log("Fetched products:", productsData);
-        console.log("Fetched categories:", categoriesData);
-  
+
         setProducts((prev) => (JSON.stringify(prev) !== JSON.stringify(productsData) ? productsData : prev));
         setCategories(Array.isArray(categoriesData) ? categoriesData : categoriesData?.categories || []);
       } catch (error) {
@@ -66,10 +71,11 @@ export default function AdminPage() {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
+
   const handleProductChange = useCallback((id: number, key: keyof Product, value: string) => {
     setProducts((prev) => prev.map((prod) => (prod.id === id ? { ...prod, [key]: value } : prod)));
   }, []);
@@ -104,14 +110,6 @@ export default function AdminPage() {
     setProducts((prev) => [...prev, { id: Date.now(), name: '', image: '' }]);
   };
 
-  /*const handleAddCategory = () => {
-    setCategories((prev) => [...prev, { name: '', subcategories: [] }]);
-  };*/
-
-  /*const handleAddSubCategory = (categoryIndex: number) => {
-    setCategories((prev) => prev.map((cat, i) => i === categoryIndex ? { ...cat, subcategories: [...cat.subcategories, { name: '' }] } : cat));
-  };*/
-
   const saveData = async () => {
     try {
       await fetch('/api/save', {
@@ -125,16 +123,28 @@ export default function AdminPage() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Consistent key
+    router.push('/admin/login'); // Ensure this is the correct login route
+  };
+
   if (loading) return <div className="p-6 text-lg text-black">Loading...</div>;
   if (error) return <div className="p-6 text-lg text-red-500">{error}</div>;
 
   return (
-    <div className="p-6 text-black">
+    <div className="p-6 text-black relative">
+      {/* Logout Button */}
+      <Button className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-md" onClick={handleLogout}>
+        Logout
+      </Button>
+
       <h1 className="text-2xl font-bold mb-4">Admin Panel</h1>
 
       <Card>
         <h2 className="text-xl font-semibold">Products</h2>
-        <Button className="mb-2" onClick={handleAddProduct}>Add Product</Button>
+        <Button className="mb-2" onClick={handleAddProduct}>
+          Add Product
+        </Button>
         <Table>
           <TableHead>
             <TableRow>
@@ -159,89 +169,29 @@ export default function AdminPage() {
               <TableRow key={product.id}>
                 <TableCell>{product.id}</TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.name} 
-                    onChange={(e) => handleProductChange(product.id, 'name', e.target.value)} 
-                  />
+                  <Input value={product.name} onChange={(e) => handleProductChange(product.id, 'name', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.scientific_name || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'scientific_name', e.target.value)} 
-                  />
+                  <Input value={product.scientific_name || ''} onChange={(e) => handleProductChange(product.id, 'scientific_name', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.color || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'color', e.target.value)} 
-                  />
+                  <Input value={product.color || ''} onChange={(e) => handleProductChange(product.id, 'color', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.purity || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'purity', e.target.value)} 
-                  />
+                  <Input value={product.purity || ''} onChange={(e) => handleProductChange(product.id, 'purity', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.moisture || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'moisture', e.target.value)} 
-                  />
+                  <Input value={product.moisture || ''} onChange={(e) => handleProductChange(product.id, 'moisture', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.volatile_oils || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'volatile_oils', e.target.value)} 
-                  />
+                  <Input value={product.volatile_oils || ''} onChange={(e) => handleProductChange(product.id, 'volatile_oils', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.oil_content || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'oil_content', e.target.value)} 
-                  />
+                  <Input value={product.oil_content || ''} onChange={(e) => handleProductChange(product.id, 'oil_content', e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input 
-                    value={product.product_specs || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'product_specs', e.target.value)} 
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input 
-                    value={product.export_packaging_options || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'export_packaging_options', e.target.value)} 
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input 
-                    value={product.type || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'type', e.target.value)} 
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input 
-                    value={product.status || ""} 
-                    onChange={(e) => handleProductChange(product.id, 'status', e.target.value)} 
-                  />
-                </TableCell>
-                <TableCell>
-                  <input 
-                    type="file" 
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        handleImageUpload(product.id, e.target.files[0]);
-                      }
-                    }} 
-                  />
-                {product.image && (
-                  <Image
-                    src={product.image}
-                    alt="Product"
-                    width={64}
-                    height={64}
-                    className="w-16 h-16"
-                  />
-                )}              
+                  <input type="file" onChange={(e) => e.target.files && handleImageUpload(product.id, e.target.files[0])} />
+                  {product.image && <Image src={product.image} alt="Product" width={64} height={64} className="w-16 h-16" />}
                 </TableCell>
                 <TableCell>
                   <Button className="bg-red" onClick={() => handleDeleteProduct(product.id)}>
@@ -253,42 +203,6 @@ export default function AdminPage() {
           </TableBody>
         </Table>
       </Card>
-          
-      {/* 
-      <Card className="mt-6">
-        <h2 className="text-xl font-semibold">Categories</h2>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Category Name</TableCell>
-              <TableCell>Subcategories</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {categories.map((category, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <Input className="text-black" value={category.name} onChange={(e) => setCategories((prev) => prev.map((cat, i) => i === index ? { ...cat, name: e.target.value } : cat))} />
-                </TableCell>
-                <TableCell>
-                  {category.subcategories.map((sub, subIndex) => (
-                    <div key={subIndex} className="mb-2">
-                      <Input className="text-black" value={sub.name} onChange={(e) => setCategories((prev) => prev.map((cat, i) => i === index ? { ...cat, subcategories: cat.subcategories.map((s, j) => j === subIndex ? { ...s, name: e.target.value } : s) } : cat))} />
-                    </div>
-                  ))}
-                  <Button onClick={() => handleAddSubCategory(index)}>Add Subcategory</Button>
-                </TableCell>
-                <TableCell>
-                  <Button variant="destructive" onClick={() => setCategories((prev) => prev.filter((_, i) => i !== index))}>
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>*/}
 
       <Button className="mt-4" onClick={saveData}>
         Save Changes
