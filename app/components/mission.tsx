@@ -7,7 +7,7 @@ const MissionSection = () => {
       {/* Image Section */}
       <div className="w-full md:w-1/2 flex justify-center">
         <Image 
-          src="/path-to-your-image.jpg" // Adjust the path
+          src="/mission.jpg"
           alt="Mission Image" 
           width={600} 
           height={400}
