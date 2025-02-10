@@ -5,7 +5,7 @@ const MissionSection = () => {
   return (
     <section className="py-16 px-6 md:px-20 text-left bg-[#F5F5F5] flex flex-col md:flex-row items-center">
       {/* Image Section */}
-      <div className="w-full md:w-[25%] flex justify-center">
+      <div className="w-full md:w-[35%] flex justify-center">
         <Image 
           src="/mission.jpg"
           alt="Mission Image" 

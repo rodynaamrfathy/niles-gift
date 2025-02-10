@@ -108,9 +108,9 @@ export default function AdminPage() {
     setCategories((prev) => [...prev, { name: '', subcategories: [] }]);
   };*/
 
-  const handleAddSubCategory = (categoryIndex: number) => {
+  /*const handleAddSubCategory = (categoryIndex: number) => {
     setCategories((prev) => prev.map((cat, i) => i === categoryIndex ? { ...cat, subcategories: [...cat.subcategories, { name: '' }] } : cat));
-  };
+  };*/
 
   const saveData = async () => {
     try {
@@ -253,10 +253,10 @@ export default function AdminPage() {
           </TableBody>
         </Table>
       </Card>
-
+          
+      {/* 
       <Card className="mt-6">
         <h2 className="text-xl font-semibold">Categories</h2>
-        {/*<Button className="mb-2" onClick={handleAddCategory}>Add Category</Button>*/}
         <Table>
           <TableHead>
             <TableRow>
@@ -288,7 +288,8 @@ export default function AdminPage() {
             ))}
           </TableBody>
         </Table>
-      </Card>
+      </Card>*/}
+
       <Button className="mt-4" onClick={saveData}>
         Save Changes
       </Button>

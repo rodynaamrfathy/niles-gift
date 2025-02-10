@@ -1,7 +1,9 @@
 import { useState } from "react";
+import emailjs from 'emailjs-com';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [submissionStatus, setSubmissionStatus] = useState<{ message: string, isError: boolean } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -9,8 +11,21 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for reaching out! We will get back to you soon.");
+
+    emailjs.send(
+      'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+      'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+      formData,
+      'YOUR_USER_ID' // Replace with your EmailJS user ID
+    )
+    .then((response) => {
+      console.log('Email sent successfully!', response.status, response.text);
+      setSubmissionStatus({ message: "Thank you for reaching out! We will get back to you soon.", isError: false });
+      setFormData({ name: "", email: "", message: "" }); // Clear form fields after submission
+    }, (error) => {
+      console.error('Failed to send email:', error);
+      setSubmissionStatus({ message: "Failed to send the message. Please try again.", isError: true });
+    });
   };
 
   return (
@@ -32,7 +47,7 @@ export default function Contact() {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          hlabib@nilesgift.com
+          info@nilesgift.com
         </a>
       </div>
 
@@ -68,6 +83,13 @@ export default function Contact() {
           Submit
         </button>
       </form>
+
+      {/* Customized Message */}
+      {submissionStatus && (
+        <div className={`mt-4 p-4 rounded-md ${submissionStatus.isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+          {submissionStatus.message}
+        </div>
+      )}
     </section>
   );
 }
