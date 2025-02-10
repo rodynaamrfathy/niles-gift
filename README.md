@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nile's Gift - Marketing Website
 
-## Getting Started
+## Project Overview
+Nile's Gift is a marketing website for a company specializing in exporting organic herbs, Aloe Vera, and other agricultural products. The website is designed to be responsive, visually appealing, and easy to navigate while providing an admin dashboard for managing product and category data.
 
-First, run the development server:
+## Features
+### 1. **User-Facing Features**
+- Responsive design for seamless browsing on desktop and mobile.
+- Display of products and categories in an intuitive layout.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 2. **Admin Dashboard**
+- Authentication-protected access.
+- Ability to update product and category data.
+- Storage of images in `/public/images`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. **Technical Stack**
+- **Frontend:** Next.js
+- **UI/UX Design:** Framer
+- **Hosting & Deployment:** vercel
+- **Authentication:** Integrated authentication system for admin access
+- **Storage:** Public image storage for product images
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
+The website is hosted and deployed on **Bluehost**. Regular updates and optimizations ensure smooth performance and reliability.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development Progress
+- Initial design and prototyping completed using Framer.
+- Responsive layout implementation in progress.
+- Admin dashboard under development for real-time product and category updates.
+- Deployment and testing on vercel.
 
-## Learn More
+## Future Enhancements
+- SEO optimization for better search engine visibility.
+- Advanced analytics and tracking for user interactions.
+- Multi-language support to target global customers.
+- Enhanced security measures for authentication and data protection.
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
+For inquiries or contributions to the project, please reach out to the **Nile's Gift** development team.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
