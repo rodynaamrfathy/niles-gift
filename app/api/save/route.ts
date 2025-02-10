@@ -11,7 +11,7 @@ export const config = {
   },
 };
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<Response> {
   try {
     // Handle JSON Data (Products & Categories)
     if (request.headers.get("content-type")?.includes("application/json")) {
@@ -42,18 +42,21 @@ export async function POST(request: Request) {
       form.parse(request as unknown as IncomingMessage, async (err, fields, files) => {
         if (err) {
           console.error("Error parsing form:", err);
-          return reject(new NextResponse("Error parsing form", { status: 500 }));
+          reject(new NextResponse("Error parsing form", { status: 500 }));
+          return;
         }
 
         try {
           // Ensure a file was uploaded
           if (!files || !files.file) {
-            return reject(new NextResponse("No file uploaded", { status: 400 }));
+            reject(new NextResponse("No file uploaded", { status: 400 }));
+            return;
           }
 
           const file = Array.isArray(files.file) ? files.file[0] : files.file;
           if (!file.originalFilename || !file.filepath) {
-            return reject(new NextResponse("Invalid file", { status: 400 }));
+            reject(new NextResponse("Invalid file", { status: 400 }));
+            return;
           }
 
           // Save the file to /public/images

@@ -44,8 +44,8 @@ export default function ProductsPage() {
       .then((res) => res.json())
       .then((data: { categories: Category[] }) => {
         const organicHerbalCategory = "Organic Herbals";
-        const organicSubcategories =
-          data.categories.find((cat) => cat.name === organicHerbalCategory)?.subcategories.map((sub) => sub.name) || [];
+        //const organicSubcategories =
+          //data.categories.find((cat) => cat.name === organicHerbalCategory)?.subcategories.map((sub) => sub.name) || [];
         
         const otherProducts =
           data.categories.find((cat) => cat.name === "Other Products")?.subcategories.map((sub) => sub.name) || [];

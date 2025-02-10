@@ -79,7 +79,7 @@ export default function AdminPage() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/save', {
         method: 'POST',
         body: formData,
       });
