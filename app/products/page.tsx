@@ -1,6 +1,7 @@
-"use client"
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react"; // Import Suspense
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import Header from "./components/header";
@@ -23,7 +24,9 @@ type Product = {
   oil_content?: string;
 };
 
-export default function ProductsPage() {
+
+// Move the main logic to a separate component
+function ProductsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categories = ["All", "Organic Herbals", "Oils", "Aloe Vera", "Other"];
@@ -52,7 +55,7 @@ export default function ProductsPage() {
     } else {
       setSelectedCategory("All");
     }
-  }, [categoryFromURL]);
+  }, [categoryFromURL, categories]); // Add `categories` to the dependency array
 
   // Filtered products
   const filteredProducts =
@@ -205,5 +208,14 @@ export default function ProductsPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+// Wrap the main component in Suspense
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 }
