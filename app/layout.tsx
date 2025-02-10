@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Nile's Gift",
   description: "Official website for Nile's Gift",
+  icons: {
+    icon: "./favicon.ico",
+  },
 };
 
 export default function RootLayout({
