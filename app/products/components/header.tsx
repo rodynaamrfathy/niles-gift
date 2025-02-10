@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 
 const Header = () => {
@@ -20,7 +21,7 @@ const Header = () => {
       } z-50`}
     >
       {/* Logo & Branding */}
-      <div className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2">
         <Image
           src="/Logo.png"
           alt="Nile’s Gift Logo"
@@ -29,7 +30,7 @@ const Header = () => {
           className="w-10 h-10 sm:w-12 sm:h-12"
         />
         <h1 className="text-lg sm:text-xl font-bold text-white">Nile’s Gift</h1>
-      </div>
+      </Link>
     </header>
   );
 };
