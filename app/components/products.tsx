@@ -13,7 +13,7 @@ const Products = () => {
       {/* Responsive Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 bg-[#F5F5F5]">
         {[
-          { name: "Organic Herbals", image: "/images/organic-herbals.jpg", type: "Herbals" },
+          { name: "Organic Herbals", image: "/images/organic-herbals.jpg", type: "Organic Herbals" },
           { name: "Oils", image: "/images/oils.jpg", type: "Oils" },
           { name: "Aloe Vera", image: "/images/aloe-vera.jpg", type: "Aloe Vera" },
         ].map((product) => (
